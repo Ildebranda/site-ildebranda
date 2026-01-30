@@ -32,18 +32,19 @@ export default function AdminPage() {
       load_config_file: false,
       backend: {
         name: "git-gateway",
-        branch: "master",
-        site_domain: "ildebrandamartins.netlify.app", // Força o domínio para evitar fechar o popup
+        branch: "main", // Confirmado main nas tuas definições
+        site_domain: "ildebrandamartins.netlify.app",
       },
       media_folder: "public/uploads",
       public_folder: "/uploads",
-      display_url: "ildebrandamartins.netlify.app",
+      display_url: "https://ildebrandamartins.netlify.app",
       collections: [
-        // COLEÇÃO: OBRAS (A Galeria Masonry)
         {
           name: "obras",
           label: "Obras (Portfólio)",
           folder: "content/obras",
+          extension: "md",
+          format: "frontmatter",
           create: true,
           slug: "{{slug}}",
           fields: [
@@ -55,14 +56,20 @@ export default function AdminPage() {
               options: ["Traditional", "Digital"],
             },
             { label: "Imagem", name: "image", widget: "image" },
-            { label: "Descrição", name: "description", widget: "text" },
+            {
+              label: "Descrição",
+              name: "description",
+              widget: "text",
+              required: false,
+            },
           ],
         },
-        // COLEÇÃO: EXPOSIÇÕES
         {
           name: "exposicoes",
           label: "Exposições",
           folder: "content/exposicoes",
+          extension: "md",
+          format: "frontmatter",
           create: true,
           slug: "{{slug}}",
           fields: [
@@ -84,18 +91,24 @@ export default function AdminPage() {
             },
           ],
         },
-        // COLEÇÃO: NOTÍCIAS (Blog)
         {
           name: "noticias",
           label: "Notícias / Blog",
           folder: "content/blog",
+          extension: "md",
+          format: "frontmatter",
           create: true,
           slug: "{{year}}-{{month}}-{{day}}-{{slug}}",
           fields: [
             { label: "Título", name: "title", widget: "string" },
             { label: "Data", name: "date", widget: "datetime" },
             { label: "Imagem de Capa", name: "image", widget: "image" },
-            { label: "Texto da Notícia", name: "body", widget: "markdown" },
+            {
+              label: "Texto da Notícia",
+              name: "body",
+              widget: "markdown",
+              required: false,
+            },
           ],
         },
       ],
