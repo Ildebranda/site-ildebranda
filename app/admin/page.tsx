@@ -17,7 +17,7 @@ export default function AdminPage() {
       load_config_file: false,
       backend: {
         name: "git-gateway",
-        branch: "main",
+        branch: "master",
       },
       media_folder: "public/uploads",
       public_folder: "/uploads",
