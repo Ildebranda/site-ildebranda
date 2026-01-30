@@ -27,6 +27,9 @@ export default function AdminPage() {
           label: "Exposições",
           folder: "content/exposicoes",
           create: true,
+          identifier_field: "title",
+          extension: "md",
+          format: "frontmatter",
           slug: "{{year}}-{{title}}",
           fields: [
             { label: "Título", name: "title", widget: "string" },
