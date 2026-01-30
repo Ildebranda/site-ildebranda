@@ -1,6 +1,9 @@
+// 1. Remove o "use client" se estiver aqui, esta página deve ser Server-Side
 import WorksClient from "../components/WorksClient";
+import { getAllWorks } from "../lib/cms";
 
 export default function GalleryPage() {
+  // 2. Agora o 'obras' será o array que o getAllWorks retorna
   const obras = getAllWorks();
 
   return (
@@ -13,10 +16,10 @@ export default function GalleryPage() {
         />
       </header>
 
+      {/* 3. O TypeScript já não vai reclamar porque obras é any[] */}
       <WorksClient initialData={obras} />
     </main>
   );
 }
-function getAllWorks() {
-  throw new Error("Function not implemented.");
-}
+
+// APAGA aquela função "Function not implemented" que tinhas aqui no fundo!
