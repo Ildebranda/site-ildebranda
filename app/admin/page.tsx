@@ -1,8 +1,6 @@
 "use client";
 import { useEffect } from "react";
 
-// ESTA PARTE RESOLVE O ERRO DE TYPESCRIPT:
-// Declaramos que o objeto window pode ter a propriedade CMS_CONFIG
 declare global {
   interface Window {
     CMS_CONFIG: any;
@@ -12,12 +10,31 @@ declare global {
 
 export default function AdminPage() {
   useEffect(() => {
-    // 1. Configuração Manual do CMS
+    // 1. Configuração do Identity ANTES do CMS
+    const identityScript = document.createElement("script");
+    identityScript.src =
+      "https://identity.netlify.com/v1/netlify-identity-widget.js";
+    identityScript.onload = () => {
+      if (window.netlifyIdentity) {
+        window.netlifyIdentity.on("init", (user: any) => {
+          if (!user) {
+            window.netlifyIdentity.on("login", () => {
+              document.location.href = "/admin/";
+            });
+          }
+        });
+      }
+    };
+    document.head.appendChild(identityScript);
+
+    // 2. Configuração Manual do CMS
     window.CMS_CONFIG = {
       load_config_file: false,
       backend: {
         name: "git-gateway",
-        branch: "master",
+        branch: "main",
+        // Substitui pelo teu API ID que encontras nas definições gerais do Netlify
+        site_id: "ildebrandamartins.netlify.app",
       },
       media_folder: "public/uploads",
       public_folder: "/uploads",
@@ -27,53 +44,19 @@ export default function AdminPage() {
           label: "Exposições",
           folder: "content/exposicoes",
           create: true,
-          identifier_field: "title",
           extension: "md",
           format: "frontmatter",
-          slug: "{{year}}-{{title}}",
           fields: [
             { label: "Título", name: "title", widget: "string" },
             { label: "Ano", name: "year", widget: "string" },
-            {
-              label: "Categoria",
-              name: "category",
-              widget: "select",
-              options: ["Individual", "Grupo"],
-            },
-            { label: "Local", name: "location", widget: "string" },
             { label: "Cartaz", name: "image", widget: "image" },
-            {
-              label: "Corpo do Texto",
-              name: "body",
-              widget: "markdown",
-              required: false,
-            },
-          ],
-        },
-        {
-          name: "blog",
-          label: "Notícias",
-          folder: "content/blog",
-          create: true,
-          slug: "{{slug}}",
-          fields: [
-            { label: "Título", name: "title", widget: "string" },
-            { label: "Data", name: "date", widget: "datetime" },
-            { label: "Capa", name: "image", widget: "image" },
-            { label: "Resumo", name: "description", widget: "text" },
             { label: "Corpo", name: "body", widget: "markdown" },
           ],
         },
       ],
     };
 
-    // 2. Adiciona o widget do Identity
-    const identityScript = document.createElement("script");
-    identityScript.src =
-      "https://identity.netlify.com/v1/netlify-identity-widget.js";
-    document.head.appendChild(identityScript);
-
-    // 3. Carrega o script do CMS
+    // 3. Carregar o CMS
     const script = document.createElement("script");
     script.src = "https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js";
     script.defer = true;
