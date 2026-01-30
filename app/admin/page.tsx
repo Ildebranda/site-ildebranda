@@ -32,7 +32,7 @@ export default function AdminPage() {
       load_config_file: false,
       backend: {
         name: "git-gateway",
-        branch: "main",
+        branch: "master",
         site_domain: "ildebrandamartins.netlify.app", // Força o domínio para evitar fechar o popup
       },
       media_folder: "public/uploads",
