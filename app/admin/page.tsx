@@ -37,7 +37,7 @@ export default function AdminPage() {
       },
       media_folder: "public/uploads",
       public_folder: "/uploads",
-      display_url: "https://ildebrandamartins.netlify.app",
+      display_url: "ildebrandamartins.netlify.app",
       collections: [
         // COLEÇÃO: OBRAS (A Galeria Masonry)
         {
