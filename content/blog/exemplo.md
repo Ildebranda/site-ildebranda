@@ -1,8 +1,8 @@
 ---
-title: Exposição de Teste
-year: "2024"
-category: Individual
-image: /uploads/exibithions.png
+title: "Nova Coleção a Caminho"
+date: 2024-05-20T12:00:00Z
+image: "/uploads/capa-noticia.jpg"
 ---
 
-Teste de conteúdo.
+Este é o texto principal da notícia. Aqui podes escrever parágrafos longos,
+explicar processos criativos ou anunciar eventos futuros.

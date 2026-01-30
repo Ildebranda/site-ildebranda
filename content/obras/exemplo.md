@@ -1,8 +1,8 @@
 ---
-title: Exposição de Teste
-year: "2024"
-category: Individual
-image: /uploads/exibithions.png
+title: "Título da Minha Pintura"
+category: "Traditional"
+image: "/uploads/imagem-da-obra.jpg"
+description: "Pintura a óleo sobre tela, técnica mista."
 ---
 
-Teste de conteúdo.
+(Podes deixar este espaço em branco ou escrever notas extras aqui)
