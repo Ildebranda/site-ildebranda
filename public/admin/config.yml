@@ -1,0 +1,33 @@
+backend:
+  name: git-gateway
+  branch: main # Garante que as mudanças vão para a tua branch principal
+
+media_folder: "public/uploads" # Onde as imagens dela vão ser guardadas
+public_folder: "/uploads"
+
+collections:
+  - name: "blog"
+    label: "Notícias / Blog"
+    folder: "src/data/posts" # Tens de mudar o teu sistema para ler ficheiros .md ou .json
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Título", name: "title", widget: "string" }
+      - { label: "Data", name: "date", widget: "datetime" }
+      - { label: "Capa", name: "image", widget: "image" }
+      - { label: "Conteúdo", name: "body", widget: "markdown" }
+
+  - name: "exposicoes"
+    label: "Exposições"
+    folder: "src/data/expos"
+    create: true
+    fields:
+      - { label: "Título", name: "title", widget: "string" }
+      - {
+          label: "Categoria",
+          name: "category",
+          widget: "select",
+          options: ["Individual", "Grupo"],
+        }
+      - { label: "Ano", name: "year", widget: "string" }
+      - { label: "Cartaz", name: "image", widget: "image" }
