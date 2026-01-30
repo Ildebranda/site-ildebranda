@@ -1,17 +1,20 @@
+"use client";
+import { useEffect } from "react";
+
 export default function AdminPage() {
-  return (
-    <html lang="pt">
-      <head>
-        <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Painel de Gestão - Ildebranda Martins</title>
-        {/* Script do CMS */}
-        <script
-          src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"
-          defer
-        />
-      </head>
-      <body>{/* O Decap CMS injeta o painel aqui automaticamente */}</body>
-    </html>
-  );
+  useEffect(() => {
+    // Carrega o script do CMS apenas no cliente
+    const script = document.createElement("script");
+    script.src = "https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js";
+    script.defer = true;
+    document.body.appendChild(script);
+
+    // Adiciona o widget do Identity para o login aparecer
+    const identityScript = document.createElement("script");
+    identityScript.src =
+      "https://identity.netlify.com/v1/netlify-identity-widget.js";
+    document.head.appendChild(identityScript);
+  }, []);
+
+  return <div id="nc-root" />;
 }

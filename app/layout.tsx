@@ -1,9 +1,11 @@
-import type { Metadata } from "next";
+"use client";
+
 import { Playfair_Display, Inter, Archivo_Black } from "next/font/google";
 import "./globals.css";
 import Sidebar from "./components/Sidebar";
 import Footer from "./components/Footer";
-import Script from "next/script"; // Importante para adicionar scripts externos
+import Script from "next/script";
+import { usePathname } from "next/navigation";
 
 const serif = Playfair_Display({
   subsets: ["latin"],
@@ -21,20 +23,19 @@ const display = Archivo_Black({
   variable: "--font-display",
 });
 
-export const metadata: Metadata = {
-  title: "Ildebranda Martins - Artista",
-  description: "Pintora e Escultora",
-};
-
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const pathname = usePathname();
+
+  // Verifica se a página atual é a do painel de administração
+  const isAdmin = pathname?.startsWith("/admin");
+
   return (
     <html lang="pt" suppressHydrationWarning>
       <head>
-        {/* Script necessário para o Netlify Identity reconhecer o utilizador no login */}
         <Script
           src="https://identity.netlify.com/v1/netlify-identity-widget.js"
           strategy="beforeInteractive"
@@ -44,11 +45,18 @@ export default function RootLayout({
         className={`${sans.variable} ${serif.variable} ${display.variable} font-sans bg-white text-zinc-900 antialiased flex`}
         suppressHydrationWarning
       >
-        <Sidebar />
-        <main className="flex-1 min-h-screen relative">{children}</main>
-        <Footer />
+        {/* Só renderiza a Sidebar se NÃO estivermos no admin */}
+        {!isAdmin && <Sidebar />}
 
-        {/* Script para redirecionar o utilizador para o admin após o login bem-sucedido */}
+        <main
+          className={`${isAdmin ? "w-full" : "flex-1"} min-h-screen relative`}
+        >
+          {children}
+        </main>
+
+        {/* Só renderiza o Footer se NÃO estivermos no admin */}
+        {!isAdmin && <Footer />}
+
         <Script id="netlify-identity-redirect">
           {`
             if (window.netlifyIdentity) {
