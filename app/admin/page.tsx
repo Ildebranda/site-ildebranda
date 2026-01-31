@@ -7,15 +7,21 @@ declare global {
   }
 }
 
+// Substitui pelo teu Client ID do GitHub OAuth App
+const GITHUB_CLIENT_ID = "Ov23lieicENK5ZTrFBUm";
+
 export default function AdminPage() {
   useEffect(() => {
-    // Configuração do CMS para GitHub
+    // Configuração do Decap CMS para GitHub OAuth
     window.CMS_CONFIG = {
       load_config_file: false,
       backend: {
         name: "github",
         repo: "Ildebranda/site-ildebranda", // repo exato no GitHub
-        branch: "main", // confirme se a tua branch principal é 'main'
+        branch: "main", // branch principal
+        auth_type: "oauth", // <--- obrigatório para OAuth
+        client_id: GITHUB_CLIENT_ID, // <--- obrigatório para OAuth
+        auth_scope: "repo", // permissões
       },
       media_folder: "public/uploads",
       public_folder: "/uploads",
@@ -97,7 +103,7 @@ export default function AdminPage() {
       ],
     };
 
-    // Script do Decap CMS
+    // Carrega o script do Decap CMS
     const script = document.createElement("script");
     script.src = "https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js";
     script.defer = true;
