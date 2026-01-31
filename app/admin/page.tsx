@@ -9,17 +9,18 @@ declare global {
 
 export default function AdminPage() {
   useEffect(() => {
-    // 1. Configuração do CMS para GitHub
+    // Configuração do CMS para GitHub
     window.CMS_CONFIG = {
       load_config_file: false,
       backend: {
         name: "github",
-        repo: "Ildebranda/site-ildebranda", // REPO DO GITHUB
-        branch: "master", // ou main, conforme o teu repo
+        repo: "Ildebranda/site-ildebranda", // repo exato no GitHub
+        branch: "main", // confirme se a tua branch principal é 'main'
       },
       media_folder: "public/uploads",
       public_folder: "/uploads",
-      display_url: "https://ildebrandamartins.vercel.app", // URL do site Vercel
+      display_url:
+        "https://site-ildebranda-fm9vnyk6f-ildebranda-martins-projects.vercel.app",
       collections: [
         {
           name: "obras",
@@ -96,7 +97,7 @@ export default function AdminPage() {
       ],
     };
 
-    // 2. Script do Decap CMS
+    // Script do Decap CMS
     const script = document.createElement("script");
     script.src = "https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js";
     script.defer = true;
