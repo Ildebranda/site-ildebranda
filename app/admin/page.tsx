@@ -4,40 +4,22 @@ import { useEffect } from "react";
 declare global {
   interface Window {
     CMS_CONFIG: any;
-    netlifyIdentity: any;
   }
 }
 
 export default function AdminPage() {
   useEffect(() => {
-    // 1. Script do Netlify Identity
-    const identityScript = document.createElement("script");
-    identityScript.src =
-      "https://identity.netlify.com/v1/netlify-identity-widget.js";
-    identityScript.onload = () => {
-      if (window.netlifyIdentity) {
-        window.netlifyIdentity.on("init", (user: any) => {
-          if (!user) {
-            window.netlifyIdentity.on("login", () => {
-              document.location.href = "/admin/";
-            });
-          }
-        });
-      }
-    };
-    document.head.appendChild(identityScript);
-
-    // 2. Configuração do CMS
+    // 1. Configuração do CMS para GitHub
     window.CMS_CONFIG = {
       load_config_file: false,
       backend: {
-        name: "git-gateway",
-        branch: "master", // Confirmado main nas tuas definições
-        site_domain: "ildebrandamartins.netlify.app",
+        name: "github",
+        repo: "Ildebranda/site-ildebranda", // REPO DO GITHUB
+        branch: "master", // ou main, conforme o teu repo
       },
       media_folder: "public/uploads",
       public_folder: "/uploads",
-      display_url: "https://ildebrandamartins.netlify.app",
+      display_url: "https://ildebrandamartins.vercel.app", // URL do site Vercel
       collections: [
         {
           name: "obras",
@@ -114,7 +96,7 @@ export default function AdminPage() {
       ],
     };
 
-    // 3. Script do Decap CMS
+    // 2. Script do Decap CMS
     const script = document.createElement("script");
     script.src = "https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js";
     script.defer = true;
