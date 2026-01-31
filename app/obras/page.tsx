@@ -1,25 +1,28 @@
-// 1. Remove o "use client" se estiver aqui, esta página deve ser Server-Side
+// NÃO usar "use client"
+
 import WorksClient from "../components/WorksClient";
 import { getAllWorks } from "../lib/cms";
+import Image from "next/image";
+
+export const dynamic = "force-static"; // gera estático no build
 
 export default function GalleryPage() {
-  // 2. Agora o 'obras' será o array que o getAllWorks retorna
+  // Lido no servidor via fs (SSG)
   const obras = getAllWorks();
 
   return (
-    <main className="min-h-screen flex flex-col items-center bg-white p-8 md:p-24">
-      <header className="w-full max-w-3xl mb-16 flex flex-col items-center">
-        <img
+    <main className="min-h-screen flex flex-col items-center bg-white px-6 md:px-12 py-10 md:py-20">
+      <header className="relative w-full max-w-3xl aspect-[3/1] mb-16">
+        <Image
           src="/obras.png"
-          alt="Obras Título"
-          className="w-full h-auto object-contain drop-shadow-xl mb-10"
+          alt="Obras"
+          fill
+          priority
+          className="object-contain drop-shadow-xl"
         />
       </header>
 
-      {/* 3. O TypeScript já não vai reclamar porque obras é any[] */}
       <WorksClient initialData={obras} />
     </main>
   );
 }
-
-// APAGA aquela função "Function not implemented" que tinhas aqui no fundo!

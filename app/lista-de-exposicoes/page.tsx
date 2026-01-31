@@ -1,23 +1,27 @@
-// REMOVE o "use client" daqui
+// NÃO usar "use client"
 
 import ExhibitionsClient from "../components/ExhibitionsClient";
 import { getAllExposicoes } from "../lib/cms";
+import Image from "next/image";
+
+export const dynamic = "force-static"; // build estático (mais rápido)
 
 export default function ExhibitionsPage() {
-  // O servidor lê os ficheiros .md antes de mandar a página para o browser
+  // Executa apenas no servidor (build time)
   const exposicoesDoCMS = getAllExposicoes();
 
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center bg-white p-8">
-      <header className="">
-        <img
+    <main className="min-h-screen flex flex-col items-center bg-white px-6 py-10">
+      <header className="relative w-full max-w-4xl aspect-[3/1] mb-20">
+        <Image
           src="/exibithions.png"
           alt="Exhibitions"
-          className="w-full h-full object-contain drop-shadow-xl"
+          fill
+          priority
+          className="object-contain drop-shadow-xl"
         />
       </header>
 
-      {/* Passamos os dados que vieram das pastas para o componente das animações */}
       <ExhibitionsClient initialData={exposicoesDoCMS} />
     </main>
   );

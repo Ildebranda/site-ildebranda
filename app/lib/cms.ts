@@ -2,58 +2,82 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 
-const obrasDirectory = path.join(process.cwd(), "content/obras");
-const exposicoesDirectory = path.join(process.cwd(), "content/exposicoes");
+/* ======================================================
+   HELPER GENÉRICO
+   Lê qualquer pasta de markdown e devolve frontmatter + content
+====================================================== */
 
-export function getAllWorks() {
-  // 1. Verifica se a pasta existe. Se não existir, retorna logo um array vazio.
-  if (!fs.existsSync(obrasDirectory)) {
-    return [];
-  }
+function getCollection(folderPath: string) {
+  const directory = path.join(process.cwd(), folderPath);
 
-  const fileNames = fs.readdirSync(obrasDirectory);
+  if (!fs.existsSync(directory)) return [];
 
-  // 2. Mapeia os ficheiros
-  const allWorks = fileNames.map((fileName) => {
-    const fullPath = path.join(obrasDirectory, fileName);
-    const fileContents = fs.readFileSync(fullPath, "utf8");
-    const { data } = matter(fileContents);
+  return fs
+    .readdirSync(directory)
+    .filter((name) => name.endsWith(".md")) // ignora .gitkeep e outros ficheiros
+    .map((fileName) => {
+      const fullPath = path.join(directory, fileName);
+      const source = fs.readFileSync(fullPath, "utf8");
 
-    return {
-      id: fileName.replace(/\.md$/, ""),
-      titulo: data.title || "Sem título",
-      categoria: data.category || "Traditional",
-      img: data.image || "",
-      descricao: data.description || "",
-    };
-  });
+      const { data, content } = matter(source);
 
-  return allWorks; // Garante que retorna o array preenchido
+      return {
+        slug: fileName.replace(/\.md$/, ""),
+        data,
+        content,
+      };
+    });
 }
 
-// Faz o mesmo para as Exposições para evitar o mesmo erro lá
+/* ======================================================
+   OBRAS
+====================================================== */
+
+export function getAllWorks() {
+  const works = getCollection("content/obras");
+
+  return works.map(({ slug, data }) => ({
+    id: slug,
+    titulo: data.title || "Sem título",
+    categoria: data.category || "Traditional",
+    img: data.image || "",
+    descricao: data.description || "",
+  }));
+}
+
+/* ======================================================
+   EXPOSIÇÕES
+====================================================== */
+
 export function getAllExposicoes() {
-  if (!fs.existsSync(exposicoesDirectory)) {
-    return [];
-  }
+  const exposicoes = getCollection("content/exposicoes");
 
-  const fileNames = fs.readdirSync(exposicoesDirectory);
-  const allExposicoes = fileNames.map((fileName) => {
-    const fileContents = fs.readFileSync(
-      path.join(exposicoesDirectory, fileName),
-      "utf8",
-    );
-    const { data } = matter(fileContents);
+  return exposicoes
+    .map(({ slug, data }) => ({
+      id: slug,
+      titulo: data.title || "",
+      categoria: data.category || "",
+      ano: data.year || "",
+      local: data.location || "",
+      img: data.image || "",
+    }))
+    .sort((a, b) => Number(b.ano) - Number(a.ano)); // mais recente primeiro
+}
 
-    return {
-      id: fileName.replace(/\.md$/, ""),
-      titulo: data.title,
-      categoria: data.category,
-      ano: data.year,
-      local: data.location,
-      img: data.image,
-    };
-  });
+/* ======================================================
+   NOTÍCIAS / BLOG
+====================================================== */
 
-  return allExposicoes.sort((a, b) => (a.ano < b.ano ? 1 : -1));
+export function getAllNoticias() {
+  const noticias = getCollection("content/blog");
+
+  return noticias
+    .map(({ slug, data, content }) => ({
+      id: slug,
+      titulo: data.title || "",
+      data: data.date || "",
+      img: data.image || "",
+      conteudo: content || "",
+    }))
+    .sort((a, b) => new Date(b.data).getTime() - new Date(a.data).getTime()); // mais recente primeiro
 }
