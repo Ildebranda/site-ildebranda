@@ -12,21 +12,95 @@ const GITHUB_CLIENT_ID = "Ov23lieicENK5ZTrFBUm";
 
 export default function CMSPage() {
   useEffect(() => {
+    // Configuração completa do Decap CMS direto no JS
     window.CMS_CONFIG = {
-      load_config_file: true, // Carrega o config.yml
-      config_file_path: "/cms/config.yml", // Caminho correto do config.yml na pasta public
+      load_config_file: false, // NÃO carrega config.yml
       backend: {
         name: "github",
-        repo: "Ildebranda/site-ildebranda", // repo exato no GitHub
-        branch: "master", // branch principal
-        auth_type: "oauth", // obrigatório para OAuth
-        client_id: GITHUB_CLIENT_ID, // OAuth Client ID
-        auth_scope: "repo", // permissões
+        repo: "Ildebranda/site-ildebranda",
+        branch: "master",
+        auth_type: "oauth",
+        client_id: GITHUB_CLIENT_ID,
+        auth_scope: "repo",
       },
       media_folder: "public/uploads",
       public_folder: "/uploads",
       display_url:
         "https://site-ildebranda-fm9vnyk6f-ildebranda-martins-projects.vercel.app",
+      collections: [
+        {
+          name: "obras",
+          label: "Obras (Portfólio)",
+          folder: "content/obras",
+          extension: "md",
+          format: "frontmatter",
+          create: true,
+          slug: "{{slug}}",
+          fields: [
+            { label: "Título da Obra", name: "title", widget: "string" },
+            {
+              label: "Categoria",
+              name: "category",
+              widget: "select",
+              options: ["Traditional", "Digital"],
+            },
+            { label: "Imagem", name: "image", widget: "image" },
+            {
+              label: "Descrição",
+              name: "description",
+              widget: "text",
+              required: false,
+            },
+          ],
+        },
+        {
+          name: "exposicoes",
+          label: "Exposições",
+          folder: "content/exposicoes",
+          extension: "md",
+          format: "frontmatter",
+          create: true,
+          slug: "{{slug}}",
+          fields: [
+            { label: "Título", name: "title", widget: "string" },
+            {
+              label: "Categoria",
+              name: "category",
+              widget: "select",
+              options: ["Individual", "Grupo"],
+            },
+            { label: "Ano", name: "year", widget: "string" },
+            { label: "Local", name: "location", widget: "string" },
+            { label: "Cartaz/Imagem", name: "image", widget: "image" },
+            {
+              label: "Texto Adicional",
+              name: "body",
+              widget: "markdown",
+              required: false,
+            },
+          ],
+        },
+        {
+          name: "noticias",
+          label: "Notícias / Blog",
+          folder: "content/blog",
+          extension: "md",
+          format: "frontmatter",
+          create: true,
+          slug: "{{year}}-{{month}}-{{day}}-{{slug}}",
+          fields: [
+            { label: "Título", name: "title", widget: "string" },
+            { label: "Data", name: "date", widget: "datetime" },
+            { label: "Imagem de Capa", name: "image", widget: "image" },
+            {
+              label: "Texto da Notícia",
+              name: "body",
+              widget: "markdown",
+              required: false,
+            },
+          ],
+        },
+      ],
     };
 
     // Carrega o script do Decap CMS
