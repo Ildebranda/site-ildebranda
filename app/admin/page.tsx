@@ -7,37 +7,31 @@ declare global {
   }
 }
 
-// Substitui pelo teu Client ID do GitHub OAuth App
-const GITHUB_CLIENT_ID = "Ov23lieicENK5ZTrFBUm";
-
 export default function AdminPage() {
   useEffect(() => {
-    // Configuração do Decap CMS para GitHub OAuth
     window.CMS_CONFIG = {
       load_config_file: false,
+
       backend: {
         name: "github",
-        repo: "Ildebranda/site-ildebranda", // repo exato no GitHub
-        branch: "main", // branch principal
-        auth_type: "oauth", // <--- obrigatório para OAuth
-        client_id: GITHUB_CLIENT_ID, // <--- obrigatório para OAuth
-        auth_scope: "repo", // permissões
+        repo: "Ildebranda/site-ildebranda",
+        branch: "main",
       },
+
       media_folder: "public/uploads",
       public_folder: "/uploads",
-      display_url:
-        "https://site-ildebranda-fm9vnyk6f-ildebranda-martins-projects.vercel.app",
+
       collections: [
         {
           name: "obras",
-          label: "Obras (Portfólio)",
+          label: "Obras",
           folder: "content/obras",
-          extension: "md",
-          format: "frontmatter",
           create: true,
           slug: "{{slug}}",
+          extension: "md",
+          format: "frontmatter",
           fields: [
-            { label: "Título da Obra", name: "title", widget: "string" },
+            { label: "Título", name: "title", widget: "string" },
             {
               label: "Categoria",
               name: "category",
@@ -45,22 +39,18 @@ export default function AdminPage() {
               options: ["Traditional", "Digital"],
             },
             { label: "Imagem", name: "image", widget: "image" },
-            {
-              label: "Descrição",
-              name: "description",
-              widget: "text",
-              required: false,
-            },
+            { label: "Descrição", name: "description", widget: "text" },
           ],
         },
+
         {
           name: "exposicoes",
           label: "Exposições",
           folder: "content/exposicoes",
-          extension: "md",
-          format: "frontmatter",
           create: true,
           slug: "{{slug}}",
+          extension: "md",
+          format: "frontmatter",
           fields: [
             { label: "Título", name: "title", widget: "string" },
             {
@@ -71,41 +61,31 @@ export default function AdminPage() {
             },
             { label: "Ano", name: "year", widget: "string" },
             { label: "Local", name: "location", widget: "string" },
-            { label: "Cartaz/Imagem", name: "image", widget: "image" },
-            {
-              label: "Texto Adicional",
-              name: "body",
-              widget: "markdown",
-              required: false,
-            },
+            { label: "Imagem", name: "image", widget: "image" },
+            { label: "Texto", name: "body", widget: "markdown" },
           ],
         },
+
         {
           name: "noticias",
-          label: "Notícias / Blog",
+          label: "Notícias",
           folder: "content/blog",
-          extension: "md",
-          format: "frontmatter",
           create: true,
           slug: "{{year}}-{{month}}-{{day}}-{{slug}}",
+          extension: "md",
+          format: "frontmatter",
           fields: [
             { label: "Título", name: "title", widget: "string" },
             { label: "Data", name: "date", widget: "datetime" },
-            { label: "Imagem de Capa", name: "image", widget: "image" },
-            {
-              label: "Texto da Notícia",
-              name: "body",
-              widget: "markdown",
-              required: false,
-            },
+            { label: "Imagem", name: "image", widget: "image" },
+            { label: "Conteúdo", name: "body", widget: "markdown" },
           ],
         },
       ],
     };
 
-    // Carrega o script do Decap CMS
     const script = document.createElement("script");
-    script.src = "https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js";
+    script.src = "https://unpkg.com/decap-cms@3.3.0/dist/decap-cms.js";
     script.defer = true;
     document.body.appendChild(script);
   }, []);
