@@ -80,7 +80,7 @@ export default function CMSPage() {
           extension: "md",
           format: "frontmatter",
           create: true,
-          slug: "{{year}}-{{month}}-{{day}}-{{slug}}",
+          slug: "{{slug}}",
           fields: [
             { label: "Título", name: "title", widget: "string" },
             { label: "Data", name: "date", widget: "datetime" },
