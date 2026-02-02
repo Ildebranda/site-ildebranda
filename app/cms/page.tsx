@@ -7,20 +7,21 @@ declare global {
   }
 }
 
-// Substitui pelo teu Client ID do GitHub OAuth App se usares OAuth
+// Substitui pelo teu Client ID do GitHub OAuth App
 const GITHUB_CLIENT_ID = "Ov23lieicENK5ZTrFBUm";
 
 export default function CMSPage() {
   useEffect(() => {
     window.CMS_CONFIG = {
-      load_config_file: true, // vai carregar o config.yml
+      load_config_file: true, // Carrega o config.yml
+      config_file_path: "/cms/config.yml", // Caminho correto do config.yml na pasta public
       backend: {
         name: "github",
-        repo: "Ildebranda/site-ildebranda",
-        branch: "master",
-        auth_type: "oauth",
-        client_id: GITHUB_CLIENT_ID,
-        auth_scope: "repo",
+        repo: "Ildebranda/site-ildebranda", // repo exato no GitHub
+        branch: "master", // branch principal
+        auth_type: "oauth", // obrigatório para OAuth
+        client_id: GITHUB_CLIENT_ID, // OAuth Client ID
+        auth_scope: "repo", // permissões
       },
       media_folder: "public/uploads",
       public_folder: "/uploads",
@@ -28,6 +29,7 @@ export default function CMSPage() {
         "https://site-ildebranda-fm9vnyk6f-ildebranda-martins-projects.vercel.app",
     };
 
+    // Carrega o script do Decap CMS
     const script = document.createElement("script");
     script.src = "https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js";
     script.defer = true;
