@@ -11,14 +11,15 @@ export default function GalleryPage() {
   const obras = getAllWorks();
 
   return (
-    <main className="min-h-screen flex flex-col items-center bg-white px-6 md:px-12 py-10 md:py-20">
-      <header className="relative w-full max-w-3xl aspect-[3/1] mb-16">
+    <main className="min-h-screen flex flex-col items-center justify-center bg-white md:px-12 md:py-20">
+      <header className="max-w-3xl w-full text-center space-y-4">
         <Image
           src="/obras.png"
           alt="Obras"
-          fill
+          width={500} // back to original dimensions
+          height={250}
+          className="max-w-[500px] w-full h-auto mx-auto" // never grow beyond natural size, center
           priority
-          className="object-contain drop-shadow-xl"
         />
       </header>
 

@@ -1,7 +1,7 @@
 ---
 id: "2"
 title: bc
-category: Traditional
+category: Instalações
 image: /uploads/maps.jpg
 description: isto é um teste
 ---

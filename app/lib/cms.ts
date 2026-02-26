@@ -39,7 +39,7 @@ export function getAllWorks() {
   return works.map(({ slug, data }) => ({
     id: slug,
     titulo: data.title || "Sem título",
-    categoria: data.category || "Traditional",
+    categoria: data.category || "Instalações",
     img: data.image || "",
     descricao: data.description || "",
   }));

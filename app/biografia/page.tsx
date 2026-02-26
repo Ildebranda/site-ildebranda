@@ -1,37 +1,43 @@
 "use client";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 export default function AboutPage() {
   return (
     <main className="min-h-screen flex flex-col items-center justify-center bg-white p-8 md:p-24">
-      <div className="max-w-3xl w-full text-center space-y-12">
-        {/* Título Estilizado (Igual à imagem "About") */}
-        <img
-          src="/aboutme.png"
-          alt="Luana Góes Collage"
-          className="w-full h-full object-contain drop-shadow-xl"
+      <div className="max-w-3xl w-full text-center space-y-4">
+
+        {/* Título Estilizado (imagem decorativa; título real no DOM acima) */}
+        <Image
+          src="/biografia.png"
+          alt="Biografia"
+          width={500}                // back to original dimensions
+          height={250}
+          className="max-w-[500px] w-full h-auto mx-auto" // never grow beyond natural size, center
+          priority
         />
 
         {/* Imagem de Colagem Central */}
-        <motion.div
+        <motion.section
+          aria-labelledby="bio-collage"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           className="relative flex justify-center"
         >
           <div className="relative w-64 h-64 md:w-80 md:h-80">
-            {/* Se tiveres a imagem da colagem, coloca-a aqui. 
-                Usei um arredondamento orgânico para simular o efeito da foto. */}
-            <img
+            <Image
               src="/ildebranda.jpg"
-              alt="Luana Góes Collage"
-              className="w-full h-full object-contain drop-shadow-xl"
+              alt="Retrato de Luana Góes, colagem de média mista"
+              fill
+              sizes="(max-width: 768px) 256px, 320px"
+              className="object-cover rounded-md drop-shadow-xl"
             />
           </div>
-        </motion.div>
+        </motion.section>
 
         {/* Texto da Biografia (Bilingue) */}
-        <div className="space-y-6 text-sm md:text-base text-zinc-800 font-light leading-relaxed text-center px-4">
+        <section id="bio-collage" className="space-y-6 text-sm md:text-base text-zinc-800 font-light leading-relaxed text-center px-4">
           <p className="opacity-80">
             Meu nome é Luana Góes, sou uma artista de mídia mista e designer do
             Brasil. Nascida em 2002, sou da região Amazônica (Amapá) e tenho uma
@@ -40,7 +46,7 @@ export default function AboutPage() {
             WNBA e NCAA. Meus artistas musicais favoritos são Little Simz e
             Warpaint.
           </p>
-        </div>
+        </section>
       </div>
     </main>
   );

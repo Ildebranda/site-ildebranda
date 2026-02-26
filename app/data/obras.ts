@@ -3,7 +3,7 @@ export const OBRAS = [
   {
     id: 1,
     titulo: "Sketchbook Studies",
-    categoria: "Traditional",
+    categoria: "Instalações",
     img: "/ildebranda.jpg",
     descricao:
       "Exploração de formas e expressões em diário gráfico, utilizando caneta e marcadores.",
@@ -11,7 +11,7 @@ export const OBRAS = [
   {
     id: 2,
     titulo: "Challengers",
-    categoria: "Digital",
+    categoria: "Quadros",
     img: "/ildebranda.jpg",
     descricao:
       "Ilustração inspirada no filme, focada no movimento e na dualidade das personagens.",

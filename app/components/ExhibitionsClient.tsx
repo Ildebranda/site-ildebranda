@@ -88,8 +88,8 @@ export default function ExhibitionsClient({
 
   return (
     <>
-      {renderSection("Exposições Individuais", "Individual")}
-      {renderSection("Exposições em Grupo", "Grupo")}
+      {renderSection("Individuais", "Individual")}
+      {renderSection("Em Grupo", "Grupo")}
 
       {/* ================= MODAL ================= */}
       <AnimatePresence>

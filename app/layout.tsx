@@ -34,6 +34,14 @@ export default function RootLayout({
 
   return (
     <html lang="pt" suppressHydrationWarning>
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="description" content="Luana Góes — artista de mídia mista. Obras, exposições e contacto." />
+        <meta property="og:site_name" content="Luana Góes" />
+        <meta property="og:type" content="website" />
+        <meta property="og:locale" content="pt_BR" />
+      </head>
+
       <body
         className={`${sans.variable} ${serif.variable} ${display.variable} font-sans bg-white text-zinc-900 antialiased flex`}
         suppressHydrationWarning
@@ -42,7 +50,7 @@ export default function RootLayout({
         {!isAdmin && <Sidebar />}
 
         <main
-          className={`${isAdmin ? "w-full" : "flex-1"} min-h-screen relative`}
+          className={`${isAdmin ? "w-full" : "flex-1 pl-32"} min-h-screen relative`}
         >
           {children}
         </main>

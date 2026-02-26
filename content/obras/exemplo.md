@@ -1,6 +1,6 @@
 ---
 title: "Nome da Minha Obra"
-category: "Traditional"
+category: "Instalações"
 image: "/uploads/obras.png"
 description: "Descrição detalhada da peça artística."
 ---

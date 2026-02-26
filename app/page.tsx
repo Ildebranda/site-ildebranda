@@ -8,7 +8,7 @@ export default function Home() {
         Mantemos o aspect-ratio mas removemos qualquer overflow ou arredondamento 
         que possa cortar a borda irregular da imagem.
       */}
-      <div className="relative w-full max-w-7xl aspect-[16/9] flex items-center justify-center">
+      <div className="relative w-full  flex items-center justify-center">
         {/* 1. Imagem Central */}
         <motion.div
           initial={{ opacity: 0, scale: 0.98 }}

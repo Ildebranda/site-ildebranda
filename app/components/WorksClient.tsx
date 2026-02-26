@@ -21,7 +21,7 @@ export default function WorksClient({ initialData }: { initialData: Work[] }) {
   const [filtro, setFiltro] = useState("All");
   const [selectedObra, setSelectedObra] = useState<Work | null>(null);
 
-  const categorias = ["All", "Traditional", "Digital"];
+  const categorias = ["All", "Instalações", "Quadros"];
 
   /* ======================================================
      FILTRO OTIMIZADO
@@ -40,7 +40,7 @@ export default function WorksClient({ initialData }: { initialData: Work[] }) {
   return (
     <>
       {/* ================= FILTROS ================= */}
-      <header className="w-full max-w-3xl mb-16 flex flex-col items-center">
+      <header className="w-full max-w-3xl mb-8 flex flex-col items-center">
         <div className="flex flex-wrap justify-center gap-4">
           {categorias.map((cat) => (
             <button

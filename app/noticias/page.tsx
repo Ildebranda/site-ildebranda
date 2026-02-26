@@ -11,13 +11,14 @@ export default function BlogPage() {
   return (
     <main className="min-h-screen flex flex-col items-center bg-white px-6 md:px-12 py-10 md:py-20">
       {/* Header imagem */}
-      <div className="relative w-full max-w-3xl aspect-[3/1] mb-16">
+      <div className="relative w-full max-w-3xl mb-6">
         <Image
-          src="/blog.png"
-          alt="Blog"
-          fill
+          src="/noticias.png"
+          alt="Notícias"
+          width={500}                // back to original dimensions
+          height={250}
+          className="max-w-[500px] w-full h-auto mx-auto" // never grow beyond natural size, center
           priority
-          className="object-contain drop-shadow-xl"
         />
       </div>
 

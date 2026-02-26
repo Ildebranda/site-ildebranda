@@ -12,13 +12,14 @@ export default function ExhibitionsPage() {
 
   return (
     <main className="min-h-screen flex flex-col items-center bg-white px-6 py-10">
-      <header className="relative w-full max-w-4xl aspect-[3/1] mb-20">
+      <header className="relative w-full max-w-4xl mb-10">
         <Image
-          src="/exibithions.png"
-          alt="Exhibitions"
-          fill
+          src="/exposicoes.png"
+          alt="Lista de Exposições"
+          width={500}                // back to original dimensions
+          height={250}
+          className="max-w-[500px] w-full h-auto mx-auto" // never grow beyond natural size, center
           priority
-          className="object-contain drop-shadow-xl"
         />
       </header>
 
