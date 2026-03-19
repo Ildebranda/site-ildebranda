@@ -36,7 +36,7 @@ export default function ExhibitionsClient({
 
     return (
       <section className="mb-24 w-full">
-        <h2 className="font-display text-4xl md:text-5xl italic text-zinc-900 mb-12 text-center lowercase border-b border-zinc-100 pb-6">
+        <h2 className="font-display text-4xl md:text-5xl italic text-zinc-900 mb-12 text-center lowercase">
           {title}
         </h2>
 
@@ -51,7 +51,7 @@ export default function ExhibitionsClient({
               onClick={() => setSelectedExpo(expo)}
             >
               {/* Imagem */}
-              <div className="relative aspect-[3/4] overflow-hidden rounded-md shadow-sm border border-zinc-100 transition-all duration-500 group-hover:shadow-2xl group-hover:-translate-y-2">
+              <div className="relative aspect-3/4 overflow-hidden rounded-md shadow-sm transition-all duration-500 group-hover:shadow-2xl group-hover:-translate-y-2">
                 <Image
                   src={expo.img}
                   alt={expo.titulo}

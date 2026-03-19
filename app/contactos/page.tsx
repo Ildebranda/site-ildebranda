@@ -3,18 +3,18 @@ import Image from "next/image";
 
 export default function Contact() {
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center bg-white p-8">
-      <div className="max-w-3xl w-full text-center space-y-4">
-
+    <main className="min-h-screen flex flex-col items-center bg-white pt-10 pb-40">
+      <div className="max-w-4xl w-full text-center">
         {/* Cabeçalho decorativo */}
-        <Image
-          src="/contactos.png"
-          alt="Contactos"
-          width={500}                // back to original dimensions
-          height={250}
-          className="max-w-[500px] w-full h-auto mx-auto" // never grow beyond natural size, center
-          priority
-        />
+        <div className="relative h-32 md:h-32 w-full">
+          <Image
+            src="/contactos.png"
+            alt="Contactos"
+            fill
+            className="object-contain"
+            priority
+          />
+        </div>
 
         {/* Texto Informativo */}
         <div className="space-y-4 text-sm md:text-base text-zinc-600 font-light leading-relaxed">
@@ -43,7 +43,10 @@ export default function Contact() {
           <input type="hidden" name="form-name" value="contact" />
 
           <div className="group border-b border-zinc-200 py-2 focus-within:border-blue-600 transition">
-            <label htmlFor="contact-name" className="text-[10px] uppercase tracking-widest text-zinc-400">
+            <label
+              htmlFor="contact-name"
+              className="text-[10px] uppercase tracking-widest text-zinc-400"
+            >
               Nome
             </label>
             <input
@@ -58,7 +61,10 @@ export default function Contact() {
           </div>
 
           <div className="group border-b border-zinc-200 py-2 focus-within:border-blue-600 transition">
-            <label htmlFor="contact-email" className="text-[10px] uppercase tracking-widest text-zinc-400">
+            <label
+              htmlFor="contact-email"
+              className="text-[10px] uppercase tracking-widest text-zinc-400"
+            >
               Email
             </label>
             <input
@@ -73,7 +79,10 @@ export default function Contact() {
           </div>
 
           <div className="group border-b border-zinc-200 py-2 focus-within:border-blue-600 transition">
-            <label htmlFor="contact-message" className="text-[10px] uppercase tracking-widest text-zinc-400">
+            <label
+              htmlFor="contact-message"
+              className="text-[10px] uppercase tracking-widest text-zinc-400"
+            >
               Mensagem
             </label>
             <textarea

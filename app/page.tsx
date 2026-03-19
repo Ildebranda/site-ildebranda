@@ -8,24 +8,24 @@ export default function Home() {
         Mantemos o aspect-ratio mas removemos qualquer overflow ou arredondamento 
         que possa cortar a borda irregular da imagem.
       */}
-      <div className="relative w-full  flex items-center justify-center">
+      <div className="relative w-full flex items-center justify-center">
         {/* 1. Imagem Central */}
         <motion.div
           initial={{ opacity: 0, scale: 0.98 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1, ease: "easeOut" }}
-          className="relative w-full h-full flex items-center justify-center"
+          /* O segredo aqui é o max-w-[95vw] para garantir que ela use quase toda a largura */
+          className="relative w-full flex items-center justify-center mx-auto"
         >
-          {/* IMPORTANTE: 
-            Para este efeito funcionar, a imagem deve ser um PNG com fundo transparente.
-            - Removido: 'rounded', 'overflow-hidden' e 'shadow-2xl' (que criam o retângulo).
-            - Adicionado: 'drop-shadow-2xl' diretamente na tag img para a sombra seguir a borda da arte.
-            - 'object-contain': Garante que a borda irregular não seja cortada.
-          */}
           <img
-            src="/logo.png"
+            src="/fundo.png"
             alt="Ildebranda Martins"
-            className="w-full h-full object-contain drop-shadow-[0_35px_35px_rgba(0,0,0,0.15)]"
+            /* Ajuste crucial:
+      - w-full: Mantém a largura que desejas.
+      - max-h-[60vh]: Limita a altura a 60% da janela (ajusta para 50vh se quiseres ainda mais curta).
+      - object-contain: Garante que o recorte irregular não seja cortado.
+    */
+            className="w-full h-auto object-contain"
           />
         </motion.div>
 

@@ -11,17 +11,19 @@ export default function GalleryPage() {
   const obras = getAllWorks();
 
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center bg-white md:px-12 md:py-20">
-      <header className="max-w-3xl w-full text-center space-y-4">
-        <Image
-          src="/obras.png"
-          alt="Obras"
-          width={500} // back to original dimensions
-          height={250}
-          className="max-w-[500px] w-full h-auto mx-auto" // never grow beyond natural size, center
-          priority
-        />
-      </header>
+    <main className="min-h-screen flex flex-col items-center bg-white pt-10 pb-40">
+      <div className="max-w-4xl w-full text-center">
+        {/* Cabeçalho decorativo */}
+        <div className="relative h-32 md:h-32 w-full">
+          <Image
+            src="/obras.png"
+            alt="Obras"
+            fill
+            className="object-contain"
+            priority
+          />
+        </div>
+      </div>
 
       <WorksClient initialData={obras} />
     </main>

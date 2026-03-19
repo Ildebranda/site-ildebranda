@@ -7,7 +7,7 @@ export default function Sidebar() {
     { name: "Biografia", href: "/biografia" },
     { name: "Contactos", href: "/contactos" },
     { name: "Obras", href: "/obras" },
-    { name: "Lista de Exposições", href: "/lista-de-exposicoes" },
+    { name: "Exposições", href: "/lista-de-exposicoes" },
     { name: "Notícias", href: "/noticias" },
   ];
 
