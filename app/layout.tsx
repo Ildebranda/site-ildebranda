@@ -1,63 +1,51 @@
-"use client";
-
-import { Syne, Outfit, Playfair_Display } from "next/font/google"; // Importando as novas fontes
+import type { Metadata, Viewport } from "next";
+import { Caveat_Brush, Cormorant_Garamond, Jost } from "next/font/google";
 import "./globals.css";
-import Sidebar from "./components/Sidebar";
-import Footer from "./components/Footer";
-import { usePathname } from "next/navigation";
 
-// Fonte para Títulos/Display (Impactante e Artística)
-const display = Syne({
+// Pincel — títulos (lembra as letras pintadas à mão dos cabeçalhos antigos)
+const brush = Caveat_Brush({
   subsets: ["latin"],
-  variable: "--font-display",
-  weight: ["700", "800"],
+  weight: "400",
+  variable: "--font-caveat-brush",
 });
 
-// Fonte para Menus e Texto (Legível e Moderna)
-const sans = Outfit({
+// Serifa clássica — textos longos, títulos de obras
+const serif = Cormorant_Garamond({
   subsets: ["latin"],
-  variable: "--font-sans",
+  weight: ["400", "500", "600"],
+  style: ["normal", "italic"],
+  variable: "--font-cormorant",
 });
 
-// Mantendo uma Serif clássica para textos longos/biografia, se necessário
-const serif = Playfair_Display({
+// Sem serifa — menus, etiquetas, backoffice
+const sans = Jost({
   subsets: ["latin"],
-  variable: "--font-serif",
+  weight: ["300", "400", "500", "600"],
+  variable: "--font-jost",
 });
+
+export const metadata: Metadata = {
+  title: {
+    default: "Ildebranda Martins",
+    template: "%s · Ildebranda Martins",
+  },
+  description:
+    "Ildebranda Martins: obras, exposições e notícias.",
+};
+
+export const viewport: Viewport = {
+  themeColor: "#f7f2e8",
+};
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  const pathname = usePathname();
-  const isAdmin = pathname?.startsWith("/admin");
-
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="pt" suppressHydrationWarning>
-      <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta
-          name="description"
-          content="Ildebranda Martins — Portfólio de Arte."
-        />
-      </head>
-
+    <html lang="pt">
       <body
-        className={`${sans.variable} ${serif.variable} ${display.variable} font-sans bg-white text-zinc-900 antialiased flex`}
-        suppressHydrationWarning
+        className={`${brush.variable} ${serif.variable} ${sans.variable} font-sans antialiased`}
       >
-        {!isAdmin && <Sidebar />}
-
-        <main
-          className={`${
-            isAdmin ? "w-full" : "flex-1 pl-32" // pb-24 garante que o texto termina ANTES do footer
-          } min-h-screen relative`}
-        >
-          {children}
-        </main>
-
-        {!isAdmin && <Footer />}
+        {children}
       </body>
     </html>
   );

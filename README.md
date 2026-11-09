@@ -1,36 +1,51 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Ildebranda Martins: site e backoffice
 
-## Getting Started
+Site em Next.js 16 alojado no **Vercel**. Os conteúdos (obras, exposições, notícias,
+textos, imagens e mensagens de contacto) ficam numa base de dados **PostgreSQL no Aiven**.
+A Ilde gere tudo em **`/admin`** com email e palavra-passe. As alterações aparecem no
+site logo a seguir, sem GitHub nem novo deploy.
 
-First, run the development server:
+## Estrutura
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+| Pasta | O quê |
+| --- | --- |
+| `app/(site)/` | Páginas públicas (Início, Obras, Exposições, Notícias, Biografia, Contactos) |
+| `app/admin/` | Backoffice: `entrar/` (login) e `(painel)/` (tudo o resto) |
+| `app/admin/actions.ts` | Gravar, apagar, ordenar e publicar conteúdos |
+| `app/lib/` | Base de dados, sessão, leitura de conteúdos |
+| `app/media/[id]` | Serve as imagens guardadas na base de dados (com cache longa) |
+| `app/api/admin/upload` | Recebe imagens; o browser reduz-las antes do envio (máx. 2400 px + miniatura) |
+| `scripts/setup.mjs` | Cria as tabelas e a conta, e importa o conteúdo antigo de `content/` |
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Primeira instalação
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. **Aiven**: criar um serviço PostgreSQL (o plano gratuito chega) e copiar o *Service URI*.
+2. **Local**: `cp .env.example .env.local` e preencher `DATABASE_URL`, `SESSION_SECRET`,
+   `ADMIN_EMAIL` e `ADMIN_PASSWORD`.
+3. Criar as tabelas e a conta da Ilde, e importar o conteúdo antigo (Markdown + `public/uploads`):
+   ```bash
+   yarn install
+   npm run db:setup -- --import
+   ```
+4. **Vercel**, em *Settings → Environment Variables*: definir `DATABASE_URL` e `SESSION_SECRET`
+   (e `DATABASE_CA_CERT`, se o usar). Depois, fazer *redeploy*.
+5. Entrar em `https://<site>/admin`.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+> Depois da importação, as pastas `content/` e `public/uploads/` deixam de ser usadas e podem ser apagadas.
+> O projeto `cms-admin` (Decap CMS) também deixa de ser necessário.
 
-## Learn More
+## Tarefas comuns
 
-To learn more about Next.js, take a look at the following resources:
+- **A Ilde esqueceu-se da palavra-passe**: definir uma nova em `ADMIN_PASSWORD` no `.env.local`
+  e correr `npm run db:setup`. Isto termina também as sessões abertas.
+- **Desenvolvimento**: `yarn dev`. Sem `DATABASE_URL`, o site abre com os textos por omissão
+  e listas vazias, o que dá para trabalhar no design.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Notas técnicas
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- As páginas públicas são estáticas (ISR). Cada gravação no backoffice chama
+  `revalidatePath("/", "layout")`, por isso o site atualiza na hora. Como reserva, há também
+  revalidação de hora a hora.
+- As imagens que deixam de ser usadas são apagadas automaticamente, com 1 dia de margem.
+- O formulário de contactos grava as mensagens na base de dados (em *Mensagens* no backoffice)
+  e tem um campo-armadilha contra robôs.

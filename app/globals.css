@@ -1,26 +1,164 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ======================================================
+   PALETA — tirada da pintura da capa (índigo, violeta,
+   rosa) e do papel/tela onde tudo assenta.
+====================================================== */
+@theme {
+  --color-paper: #f7f2e8;
+  --color-paper-2: #efe6d6;
+  --color-paper-3: #e4d8c3;
+  --color-ink: #211a42;
+  --color-ink-soft: #544c70;
+  --color-ink-mute: #8a83a0;
+  --color-ultra: #3a2a9c;
+  --color-ultra-deep: #241a6b;
+  --color-violet: #6b4bc9;
+  --color-rose: #c8457f;
+  --color-ochre: #d29b38;
+  --color-moss: #4f6b4a;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-brush: var(--font-caveat-brush);
+  --font-serif: var(--font-cormorant);
+  --font-sans: var(--font-jost);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-jost), system-ui, sans-serif;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--color-rose) 30%, transparent);
+}
+
+/* ======================================================
+   TEXTURA DE PAPEL — grão subtil por cima de tudo
+====================================================== */
+.paper-grain::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.32;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.45  0 0 0 0 0.38  0 0 0 0 0.3  0 0 0 0.55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+/* Manchas de aguarela no fundo */
+.watercolor-wash {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(38rem 28rem at 92% 6%, color-mix(in srgb, var(--color-violet) 13%, transparent), transparent 70%),
+    radial-gradient(30rem 24rem at 4% 96%, color-mix(in srgb, var(--color-rose) 11%, transparent), transparent 70%),
+    radial-gradient(26rem 20rem at 70% 105%, color-mix(in srgb, var(--color-ochre) 12%, transparent), transparent 70%);
+  filter: blur(8px);
+}
+
+/* ======================================================
+   PINCELADAS
+====================================================== */
+.brush-underline {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 22' preserveAspectRatio='none'><path d='M3 13 C 28 6, 62 7, 96 9 S 160 5, 197 8 C 199 10, 198 13, 195 14 C 160 17, 120 18, 92 16 S 34 19, 6 18 C 2 17, 1 15, 3 13 Z' fill='%23c8457f' fill-opacity='0.55'/></svg>");
+  background-repeat: no-repeat;
+  background-size: 100% 0.55em;
+  background-position: 0 92%;
+}
+
+.brush-swatch {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 120' preserveAspectRatio='none'><path d='M8 30 C 70 10, 160 18, 230 12 S 360 6, 394 22 C 399 50, 396 80, 390 100 C 300 114, 210 106, 140 112 S 30 116, 10 104 C 2 80, 4 52, 8 30 Z' fill='%233a2a9c'/></svg>");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+/* Moldura: obra pousada em passe-partout de papel */
+.art-frame {
+  background: #fffdf8;
+  padding: 0.6rem;
+  box-shadow:
+    0 1px 0 rgba(33, 26, 66, 0.04),
+    0 10px 24px -14px rgba(33, 26, 66, 0.35),
+    0 2px 6px -2px rgba(33, 26, 66, 0.12);
+}
+
+/* ======================================================
+   TEXTO LONGO (biografia, notícias, descrições)
+====================================================== */
+.prose-ilde {
+  font-family: var(--font-cormorant), Georgia, serif;
+  font-size: 1.25rem;
+  line-height: 1.7;
+  color: var(--color-ink);
+}
+.prose-ilde > * + * {
+  margin-top: 1em;
+}
+.prose-ilde h2,
+.prose-ilde h3 {
+  font-family: var(--font-caveat-brush), cursive;
+  color: var(--color-ultra);
+  line-height: 1.15;
+  margin-top: 1.6em;
+}
+.prose-ilde h2 {
+  font-size: 2rem;
+}
+.prose-ilde h3 {
+  font-size: 1.6rem;
+}
+.prose-ilde a {
+  color: var(--color-ultra);
+  text-decoration: underline;
+  text-decoration-color: var(--color-rose);
+  text-underline-offset: 3px;
+}
+.prose-ilde a:hover {
+  color: var(--color-rose);
+}
+.prose-ilde ul {
+  list-style: disc;
+  padding-left: 1.4em;
+}
+.prose-ilde ol {
+  list-style: decimal;
+  padding-left: 1.4em;
+}
+.prose-ilde blockquote {
+  border-left: 3px solid var(--color-rose);
+  padding-left: 1em;
+  font-style: italic;
+  color: var(--color-ink-soft);
+}
+.prose-ilde img {
+  max-width: 100%;
+  height: auto;
+}
+.prose-ilde strong {
+  font-weight: 600;
+}
+.prose-ilde-sm {
+  font-size: 1.1rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }
